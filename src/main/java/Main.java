@@ -11,7 +11,7 @@ public class Main {
     static File readFile() {
 
 
-        String fileName = Main.class.getClassLoader().getResource("./image/test1.png").getPath();//获取文件路径
+        String fileName = Main.class.getClassLoader().getResource("./image/request_message.png").getPath();//获取文件路径
         System.out.println(new File(fileName).exists());
         String fileUtl = Main.class.getResource("image/test1.png").getFile();
         System.out.println(new File(fileUtl).exists());
@@ -108,7 +108,7 @@ public class Main {
         RequestBody filebody = MultipartBody.create(mediaType, readFile());
 
         RequestBody multipartBody = new MultipartBody.Builder()
-                .addFormDataPart("smfile", "lsd.png", filebody)
+                .addFormDataPart("smfile", String.valueOf(System.currentTimeMillis()) + ".png", filebody)
                 .setType(MultipartBody.FORM)
                 .build();
 
