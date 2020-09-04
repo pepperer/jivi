@@ -1,4 +1,3 @@
-import com.hiy.utils.ThreadUtils;
 import okhttp3.*;
 
 import java.io.File;
@@ -36,10 +35,12 @@ public class Main {
 //                ThreadUtils.printCurThreadId();
 //                apiRequestPost("https://nei.netease.com/api/apimock-v2/4a12794f695e0b5d92226048f6b59774/post");
 //                apiRequestPost("https://sm.ms/api/v2/token");
-
                 apiPostFile();
             }
         });
+
+//        HiyExecutorService.getThreadPoolExecutor().shutdown();
+
 
 //        System.out.println("Arrive one piece");
     }
@@ -108,6 +109,7 @@ public class Main {
 
         RequestBody multipartBody = new MultipartBody.Builder()
                 .addFormDataPart("smfile", "lsd.png", filebody)
+                .setType(MultipartBody.FORM)
                 .build();
 
 
@@ -116,6 +118,7 @@ public class Main {
         Request request = new Request.Builder()
                 .url(host + "/upload")
                 .addHeader("Authorization", token)
+                .addHeader("content-Type", "multipart/form-data")
                 .addHeader("user-agent", Main.getUserAgent())
                 .post(multipartBody)
                 .build();
