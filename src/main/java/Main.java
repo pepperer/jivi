@@ -8,9 +8,26 @@ public class Main {
     static Object object = new Object();
     static String host = "https://sm.ms/api/v2";
 
+
+    static Object mObj = new Object();
+
+    static void lock() {
+        try {
+            synchronized (mObj) {
+                mObj.wait();
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    static void unLock() {
+        synchronized (mObj) {
+            mObj.notify();
+        }
+    }
+
     static File readFile() {
-
-
         String fileName = Main.class.getClassLoader().getResource("./image/request_message.png").getPath();//获取文件路径
         System.out.println(new File(fileName).exists());
         String fileUtl = Main.class.getResource("image/test1.png").getFile();
@@ -27,22 +44,21 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
         readFile();
-//        ThreadUtils.printCurThreadId();
-        HiyExecutorService.getThreadPoolExecutor().execute(new Runnable() {
+//        apiRequest();
+        new Thread(new Runnable() {
             @Override
             public void run() {
-//                apiRequest();
-//                ThreadUtils.printCurThreadId();
-//                apiRequestPost("https://nei.netease.com/api/apimock-v2/4a12794f695e0b5d92226048f6b59774/post");
-//                apiRequestPost("https://sm.ms/api/v2/token");
-                apiPostFile();
+                try {
+                    Thread.sleep(2000);
+                    unLock();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-        });
+        }).start();
+        lock();
 
-//        HiyExecutorService.getThreadPoolExecutor().shutdown();
-
-
-//        System.out.println("Arrive one piece");
+        System.out.println("程序结束了， 再见");
     }
 
     public static void apiRequest() {
@@ -52,6 +68,7 @@ public class Main {
 
         Request request = new Request.Builder()
                 .url(urlBuilder.build())
+                .addHeader("User-Agent", Main.getUserAgent())
                 .addHeader("Authorization", "s3fTe54VUofxew3dDaJiv045Nr7kkZFd")
                 .build();
 
