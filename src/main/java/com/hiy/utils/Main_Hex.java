@@ -1,4 +1,7 @@
+package com.hiy.utils;
+
 import okio.ByteString;
+import okio.Okio;
 
 /**
  * 需求1： String => byte => hex      ok
@@ -108,8 +111,11 @@ public class Main_Hex {
         }
         // byte => String
         System.out.println("十六进制 ==> String : " + new String(bytes1));
+    }
 
 
+
+    public static void  method4() {
     }
 
 }

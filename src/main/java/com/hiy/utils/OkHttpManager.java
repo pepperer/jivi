@@ -1,9 +1,10 @@
+package com.hiy.utils;
+
 import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 
-import javax.net.ssl.SSLSession;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
