@@ -28,11 +28,27 @@ public class OkHttpManager {
 
     private OkHttpClient mOkHttpClient;
 
+
+    private File readFile(String path) {
+        String fileName = Main.class.getClassLoader().getResource("./cache").getPath();//获取文件路径
+        System.out.println(new File(fileName).exists());
+//        String fileUtl = Main.class.getResource("image/test1.png").getFile();
+//        System.out.println(new File(fileUtl).exists());
+
+
+//        System.out.println("当前路径L" + fileName + "\n " + fileUtl);
+
+//        File file = new File(fileName);
+//        System.out.println("当前路径L" + file.exists());
+
+        return new File(fileName);
+    }
+
     private void initClient() {
         if (mOkHttpClient == null) {
             mOkHttpClient = new OkHttpClient.Builder()
                     //设置缓存文件路径，和文件大小
-//                    .cache(new Cache(new File("../../cache"), 50 * 1024 * 1024))
+                    .cache(new Cache(readFile("./cache"), 50 * 1024 * 1024))
                     .connectTimeout(10, TimeUnit.SECONDS)
                     .readTimeout(10, TimeUnit.SECONDS)
                     .writeTimeout(10, TimeUnit.SECONDS)
@@ -43,7 +59,7 @@ public class OkHttpManager {
 //                .cookieJar(new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(MyApplication.getContext())))
 //                    .addInterceptor(OfflineCacheInterceptor.getInstance())
 //                    .addNetworkInterceptor(NetCacheInterceptor.getInstance())
-                    .addInterceptor(this.getHttpLoggingInterceptor())
+                    .addNetworkInterceptor(this.getHttpLoggingInterceptor())
                     .build();
         }
     }
