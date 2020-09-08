@@ -118,7 +118,6 @@ public class Main {
         Request request = new Request.Builder()
                 .url(host + "/upload")
                 .addHeader("Authorization", token)
-                .addHeader("content-Type", "multipart/form-data")
                 .addHeader("user-agent", Main.getUserAgent())
                 .post(multipartBody)
                 .build();
