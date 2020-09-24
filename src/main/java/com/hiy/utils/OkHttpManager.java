@@ -49,7 +49,7 @@ public class OkHttpManager {
         if (mOkHttpClient == null) {
             mOkHttpClient = new OkHttpClient.Builder()
                     //设置缓存文件路径，和文件大小
-                    .cache(new Cache(readFile("./cache"), 50 * 1024 * 1024))
+//                    .cache(new Cache(FileUtils.newFile("cache/"), 50 * 1024 * 1024))
                     .connectTimeout(10, TimeUnit.SECONDS)
                     .readTimeout(10, TimeUnit.SECONDS)
                     .writeTimeout(10, TimeUnit.SECONDS)
@@ -78,7 +78,7 @@ public class OkHttpManager {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
-                System.out.println("日志:" + message);
+                System.out.println("日志 =>" + message);
             }
         });
 
